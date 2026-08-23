@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import typer
 
-from customer_support_analytics.config import PROCESSED_DATA_DIR, RAW_DATA_DIR
+from discarted_datasets.customer_support_analytics.modeling.config import PROCESSED_DATA_DIR, RAW_DATA_DIR
 
 app = typer.Typer()
 

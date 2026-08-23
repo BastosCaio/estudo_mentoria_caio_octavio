@@ -1,61 +1,50 @@
-# customer_support_analytics
+# priority_classification
 
 <a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
 </a>
 
-Estudo e preparacao para projeto de data science de suporte ao cliente.
+Estudo e preparação para um projeto de data science de classificação de prioridade de tickets de suporte técnico.
+
+O projeto começou analisando outro dataset (`customer_support_tickets.csv`, sob o pacote `customer_support_analytics`), mas esse dataset se mostrou inadequado para o objetivo da análise. Esse trabalho — e um segundo dataset candidato, também descartado — foi arquivado em `discarted_datasets/` e não faz parte do pipeline ativo. O trabalho ativo está em `priority_classification/`, usando o dataset Kaggle "Technical Support Dataset".
 
 ## Project Organization
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
+├── LICENSE                      <- Open-source license if one is chosen
+├── Makefile                     <- Makefile with convenience commands like `make lint` or `make test`
+├── README.md                    <- The top-level README for developers using this project.
+├── pyproject.toml                <- Project configuration file with package metadata for
+│                                    priority_classification and configuration for tools like ruff
+├── uv.lock                      <- Locked dependency versions, managed by uv
 │
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+├── discarted_datasets/          <- Datasets e pipeline explorados e descartados; só referência
+│   │                                histórica — não fazem parte do pyproject.toml, do lint nem de
+│   │                                nenhum target do Makefile.
+│   ├── customer_support_analytics/   <- Pacote cookiecutter original + notebooks de EDA de
+│   │                                    customer_support_tickets.csv (dataset descartado)
+│   └── ticket_helpdesk_multilingual/ <- EDA de um segundo dataset candidato, também descartado
 │
-├── models             <- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         customer_support_analytics and configuration for tools like black
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
-│
-└── customer_support_analytics   <- Source code for use in this project.
+└── priority_classification/     <- Projeto ativo: classificação de prioridade de tickets de
+    │                                suporte técnico. Fonte de código para uso neste projeto.
+    ├── __init__.py              <- Torna priority_classification um módulo Python instalável
     │
-    ├── __init__.py             <- Makes customer_support_analytics a Python module
+    ├── data
+    │   ├── raw                 <- Technical Support Dataset.csv (o dado original, imutável)
+    │   └── processed           <- train.csv / val.csv / test.csv, gerados por modeling/dataset.py
     │
-    ├── config.py               <- Store useful variables and configuration
+    ├── modeling
+    │   ├── __init__.py
+    │   ├── config.py           <- Paths do projeto (DATA_DIR, MODELS_DIR, REPORTS_DIR, FIGURES_DIR,
+    │   │                          ...) relativos a PROJ_ROOT, e configuração do loguru
+    │   └── dataset.py          <- CLI Typer: split treino/val/teste (70/15/15), agrupado por
+    │                              `Ticket ID` e estratificado por `Priority`
     │
-    ├── dataset.py              <- Scripts to download or generate data
-    │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
-    │
-    └── plots.py                <- Code to create visualizations
+    └── notebooks                <- Jupyter notebooks. Convenção de nome: número (ordenação),
+                                     iniciais do autor e descrição curta separada por `-`.
+        └── cb-eda-technical-support-dataset.ipynb  <- EDA que avalia a qualidade do dataset
+                                     (nulos, duplicatas de categoria, consistência temporal, SLA,
+                                     geolocalização) antes de decidir usá-lo para modelagem.
 ```
 
 --------
-
