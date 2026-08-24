@@ -44,3 +44,22 @@ uv run python priority_classification/modeling/dataset.py \
 
 - Ruff is configured with `line-length = 99` and import sorting (`extend-select = ["I"]`), first-party imports (`priority_classification`) sorted separately and force-sorted within sections — always run `make format` rather than hand-ordering imports.
 - New pipeline scripts follow the existing Typer `app()` + `@app.command() def main(...)` pattern, with I/O paths as parameters defaulting to the `config.py` directory constants.
+
+## Skill routing
+
+When the user's request matches an available skill, invoke it via the Skill tool. When in doubt, invoke the skill.
+
+Key routing rules:
+- Product ideas/brainstorming → invoke /office-hours
+- Strategy/scope → invoke /plan-ceo-review
+- Architecture → invoke /plan-eng-review
+- Design system/plan review → invoke /design-consultation or /plan-design-review
+- Full review pipeline → invoke /autoplan
+- Bugs/errors → invoke /investigate
+- QA/testing site behavior → invoke /qa or /qa-only
+- Code review/diff check → invoke /review
+- Visual polish → invoke /design-review
+- Ship/deploy/PR → invoke /ship or /land-and-deploy
+- Save progress → invoke /context-save
+- Resume context → invoke /context-restore
+- Author a backlog-ready spec/issue → invoke /spec
