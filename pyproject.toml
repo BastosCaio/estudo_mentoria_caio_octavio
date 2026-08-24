@@ -18,6 +18,7 @@ classifiers = [
 dependencies = [
     "ipython",
     "jupyterlab",
+    "kagglehub",
     "loguru",
     "matplotlib",
     "notebook",
@@ -36,13 +37,13 @@ requires-python = "~=3.12.0"
 
 [tool.ruff]
 line-length = 99
-src = ["priority_classification"]
-include = ["pyproject.toml", "priority_classification/**/*.py"]
+src = ["priority_classification", "ticket_prio_class"]
+include = ["pyproject.toml", "priority_classification/**/*.py", "ticket_prio_class/**/*.py"]
 
 [tool.ruff.lint]
 extend-select = ["I"]  # Add import sorting
 
 [tool.ruff.lint.isort]
-known-first-party = ["priority_classification"]
+known-first-party = ["priority_classification", "ticket_prio_class"]
 force-sort-within-sections = true
 
